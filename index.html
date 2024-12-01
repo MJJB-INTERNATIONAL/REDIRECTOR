@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="https://raw.githubusercontent.com/MJJB-INTERNATIONAL/MJJBimge/e745067f879388891d221ebd19859ee0b222dadc/MJ8.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Redirector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff0000 0%, #000000 50%, #ff0000 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .link-container {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px;
+            width: 220px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+        }
+        .link-container:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
+        .rotating-img {
+            width: 26%;
+            height: auto;
+            border-radius: 12px;
+            animation: rotate-once 2.3s linear;
+        }
+        @keyframes rotate-once {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(90deg);
+            }
+        }
+        #slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        #slideshow img {
+            width: 395px;
+            height: auto;
+            object-fit: cover; /* Ensure the image covers the entire screen */
+            object-position: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Redirect Links</h2>
+    <div id="linkList">
+        <!-- Links will appear here -->
+    </div>
+    <div id="slideshow"></div>
+    <script>
+        // Array of links with user-friendly names and images
+        const links = [
+            { 
+                name: "MICROCOPY ‎ MASTER", 
+                url: "https://search.google.com/u/5/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fmjjb-international.github.io%2FMICROCOPY-MASTER%2F",
+                image: "https://raw.githubusercontent.com/MJJB-INTERNATIONAL/MJJBimge/1baef02cf41529aff671d9ce9350107ecb6d127c/MJMJJBw8.svg",
+                slideshow: [
+                 "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/MM(i).jpg?raw=true",
+                  "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/MM(ii).jpg?raw=true",
+                  "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/MM(iii).jpg?raw=true",
+                  "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/MM(iv).jpg?raw=true"              
+                ]
+            },
+            { 
+                name: "STATISTICS ‎ CALCULATOR", 
+                url: "https://search.google.com/u/5/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fmjjb-international.github.io%2FSTATISTICS%2F",
+                 image: "https://raw.githubusercontent.com/MJJB-INTERNATIONAL/MJJBimge/1baef02cf41529aff671d9ce9350107ecb6d127c/MJMJJBw8.svg",
+                slideshow: [
+                "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/SC(i).jpg?raw=true",
+                "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/SC(ii).jpg?raw=true",              
+                "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/SC(iii).jpg?raw=true",
+                "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/SC(iv).jpg?raw=true"
+                ]
+            },
+            { 
+                name: "NUMBERS‎‎ ‎ TO‎ ‎ WORDS‎ CONVERTER", 
+                url: "https://search.google.com/u/5/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fmjjb-international.github.io%2FNumbers-To-Word-Converter%2F",
+                 image: "https://raw.githubusercontent.com/MJJB-INTERNATIONAL/MJJBimge/1baef02cf41529aff671d9ce9350107ecb6d127c/MJMJJBw8.svg",
+                 slideshow: [
+                 "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/NW(i).jpg?raw=true",          
+                 "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/NW(ii).jpg?raw=true",
+                 "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/NW(iii).jpg?raw=true",
+                 "https://github.com/MJJB-INTERNATIONAL/MJJBimge/blob/main/NW(iv).jpg?raw=true"
+                ]
+            }
+        ];
+
+        // Get the link list container
+        const linkList = document.getElementById("linkList");
+        const slideshow = document.getElementById("slideshow");
+
+        // Generate the links dynamically
+        links.forEach(link => {
+            const div = document.createElement("div");
+            div.className = "link-container";
+            div.textContent = link.name;
+            div.onclick = () => {
+                // Replace text with the first image
+                div.textContent = "";
+                const img = document.createElement("img");
+                img.src = link.image;
+                img.className = "rotating-img";
+                div.appendChild(img);
+
+                // Wait 1 second, then start the slideshow
+                setTimeout(() => {
+                    div.removeChild(img);
+                    div.textContent = link.name; // Restore original text
+                    startSlideshow(link.slideshow, link.url);
+                }, 2060);
+            };
+            linkList.appendChild(div);
+        });
+
+        // Function to start the slideshow
+        function startSlideshow(images, url) {
+            let index = 0;
+            slideshow.style.display = "flex";
+
+            const img = document.createElement("img");
+            slideshow.appendChild(img);
+
+            const interval = setInterval(() => {
+                if (index >= images.length) {
+                    clearInterval(interval);
+                    slideshow.style.display = "none";
+                    slideshow.innerHTML = "";
+                    window.open(url, "_blank");
+                } else {
+                    img.src = images[index];
+                    index++;
+                }
+            }, 1070);
+        }
+    </script>
+</body>
+</html>
